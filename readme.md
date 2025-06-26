@@ -1,97 +1,104 @@
 🚗 Vending Machine Mobil Super
-Selamat datang di Vending Machine Mobil Super, sebuah proyek simulasi di mana Anda bisa membeli mobil impian—mulai dari Angkot legendaris hingga Supercar V12—langsung dari terminal atau browser Anda!
+Sebuah proyek simulasi untuk membeli mobil impian, dari Rubicon hingga Odong-Odong, dengan antarmuka CLI dan Web yang super interaktif.
 
-Proyek ini dibuat sebagai studi kasus untuk mata kuliah Uji Kualitas Perangkat Lunak, mencakup implementasi, pengujian komprehensif (Whitebox & Blackbox), dan pengembangan antarmuka.
+👨‍💻 Dibuat Oleh
+Nama
 
+NIM
 
+ARYA ADE WIGUNA
 
+58
 
-✨ Fitur Utama
-Aplikasi ini hadir dalam dua versi dengan fungsionalitas yang kaya:
+✨ Fitur Unggulan
+Aplikasi ini hadir dalam dua versi dengan fungsionalitas yang berbeda namun sama-sama keren.
 
-versione CLI (Command-Line Interface)
-Menu Interaktif: Navigasi berbasis teks yang jelas dan mudah digunakan.
+Fitur
 
-Validasi Input: Penanganan error yang tangguh untuk input pilihan dan saldo.
+💻 Versi CLI (Terminal)
 
-Alur Transaksi Lengkap: Dari pemilihan, pengecekan saldo, hingga konfirmasi pembelian.
+🌐 Versi Web (Browser)
 
-Mode Ulang & Keluar: Pengguna bisa mengulang transaksi jika gagal atau keluar dari program dengan aman.
+Antarmuka
 
-Versi Web (HTML/CSS/JS)
-Antarmuka Visual Modern: Desain premium bertema gelap dengan efek hover, glow, dan animasi 3D.
+Menu Interaktif berbasis Teks
 
-Tampilan Kartu Dinamis: Daftar mobil lengkap dengan gambar dan harga yang ditampilkan secara menarik.
+Desain Visual Modern & Responsif
 
-Garasi Pribadi: Setiap mobil yang berhasil dibeli akan ditampilkan di "Garasi Anda".
+Validasi
 
-Efek "Ledakan" Confetti: Perayaan visual yang memuaskan saat transaksi berhasil.
+Penanganan Error Input & Saldo
 
-Desain Responsif: Tampilan yang menyesuaikan dengan baik di berbagai ukuran layar.
+Notifikasi Modal Interaktif
 
-🚀 Teknologi yang Digunakan
-Backend (Logika Inti & CLI):
+Efek Visual
 
-Python 3: Untuk semua logika bisnis, proses transaksi, dan aplikasi berbasis terminal.
+Teks ASCII Art
 
-Frontend (Antarmuka Web):
+Animasi 3D, Glow & Ledakan Confetti! 🎉
 
-HTML5: Sebagai kerangka struktur halaman web.
+Fitur Unik
 
-CSS3: Untuk semua styling, animasi (Flexbox, Grid, Keyframes), dan desain responsif.
+Alur Cepat & Ringan
 
-JavaScript (ES6+): Untuk memanipulasi DOM, menangani interaktivitas, dan mengimplementasikan logika transaksi di sisi klien.
+Garasi Pribadi untuk Mobil yang Dibeli
 
-⚙️ Instalasi dan Cara Menjalankan
-Untuk Versi CLI:
-Pastikan Anda memiliki Python 3 terinstal.
+🚀 Arsitektur Teknologi
+Komponen
 
-Clone repositori ini atau unduh file vending_machine_v3.py.
+Teknologi
 
-Buka terminal atau command prompt, navigasikan ke direktori file.
+Deskripsi
+
+Backend
+
+Python 3
+
+Mengelola semua logika bisnis, proses transaksi, dan menjalankan versi CLI.
+
+Frontend
+
+HTML5, CSS3, JS (ES6+)
+
+Membangun struktur, gaya, animasi, dan interaktivitas untuk versi Web.
+
+⚙️ Instalasi & Cara Menjalankan
+Untuk Versi CLI (Terminal):
+Pastikan Python 3 terinstal.
+
+Unduh file vending_machine_v3.py.
+
+Buka terminal, navigasikan ke direktori file.
 
 Jalankan perintah:
 
-python ven.py
+python vending_machine_v3.py
 
+Taklukkan jalanan dari terminal Anda!
 
-Ikuti instruksi yang muncul di terminal.
+Untuk Versi Web (Browser):
+Unduh index.html, style.css, dan script.js.
 
-Untuk Versi Web:
-Unduh ketiga file: index.html, style.css, dan script.js.
+Pastikan ketiganya berada dalam satu folder.
 
-Pastikan ketiga file tersebut berada dalam satu folder yang sama.
+Buka index.html di browser favorit Anda.
 
-Buka file index.html menggunakan browser modern apa pun (Google Chrome, Firefox, dll).
+Nikmati pengalaman membeli mobil dengan visual yang memukau!
 
-📝 Dokumentasi Pengujian
-Proyek ini telah melalui proses pengujian kualitas perangkat lunak yang ketat untuk memastikan keandalan dan fungsionalitasnya.
-
-Whitebox Testing:
-
-Metodologi: Analisis Flow Graph, perhitungan Cyclomatic Complexity (V(G) = 3), dan pengujian Independent Paths untuk cakupan 100% pada logika inti.
-
-Tujuan: Memastikan semua cabang logika internal berfungsi sesuai ekspektasi.
-
-Blackbox Testing:
-
-Metodologi: Unit Testing, Integration Testing, Load Testing, dan Stress Testing.
-
-Tujuan: Memvalidasi fungsionalitas dari sudut pandang pengguna akhir dan menguji ketahanan aplikasi.
-
-Untuk detail lengkap mengenai skenario, kasus uji, dan hasil pengujian, silakan merujuk ke dokumen Dokumen Pengujian Vending Machine.md yang ada di repositori ini.
+📝 CATATAN PENGUJIAN
+Proyek ini telah melewati serangkaian Pengujian Kualitas Perangkat Lunak yang komprehensif, termasuk Whitebox Testing (analisis Flow Graph & Cyclomatic Complexity) dan Blackbox Testing (Unit, Integration, Load, & Stress Testing). Untuk laporan lengkap, lihat file Dokumen Pengujian Vending Machine.md.
 
 🤝 Kontribusi
-Merasa ada yang bisa ditingkatkan? Punya ide mobil lucu lainnya? Jangan ragu untuk melakukan fork pada repositori ini, buat perubahan Anda, dan kirimkan Pull Request. Semua kontribusi akan kami hargai!
+Punya ide untuk membuat proyek ini lebih gila? Ingin menambahkan "Tayo the Little Bus"? Jangan ragu!
 
-Fork proyek ini.
+Fork repositori ini.
 
-Buat branch fitur baru (git checkout -b fitur/NamaFiturKeren).
+Buat Branch baru (git checkout -b fitur/Mobil-Terbang).
 
-Commit perubahan Anda (git commit -m 'Menambahkan fitur keren').
+Commit perubahan Anda (git commit -m 'feat: Menambahkan mobil terbang').
 
-Push ke branch (git push origin fitur/NamaFiturKeren).
+Push ke branch (git push origin fitur/Mobil-Terbang).
 
 Buka sebuah Pull Request.
-ARYA ADE WIGUNA nim 58
+
 Terima kasih telah mengunjungi proyek ini!
