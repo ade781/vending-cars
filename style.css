@@ -487,3 +487,110 @@ header p {
 .modal-close-button:hover {
     background-color: var(--accent-buy);
 }
+
+/* --- Tambahan untuk "MADE BY ADE7" --- */
+
+/* Animasi untuk efek glow baru (neon pulse) */
+@keyframes text-glow {
+    0% {
+        text-shadow: 0 0 5px var(--accent-buy), 0 0 10px var(--accent-buy), 0 0 15px var(--accent-buy);
+    }
+
+    50% {
+        text-shadow: 0 0 10px var(--accent-buy), 0 0 20px var(--accent-buy), 0 0 30px var(--accent-buy), 0 0 40px rgba(88, 166, 255, 0.7);
+    }
+
+    100% {
+        text-shadow: 0 0 5px var(--accent-buy), 0 0 10px var(--accent-buy), 0 0 15px var(--accent-buy);
+    }
+}
+
+/* Animasi untuk efek flicker/glitch baru (digital glitch) */
+@keyframes text-flicker {
+
+    0%,
+    18%,
+    22%,
+    26%,
+    54%,
+    58%,
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        text-shadow:
+            -1px -1px 0px rgba(0, 255, 255, 0.7),
+            /* Cyan */
+            1px 1px 0px rgba(255, 0, 255, 0.7);
+        /* Magenta */
+    }
+
+    20% {
+        opacity: 0.7;
+        transform: translateX(-2px);
+        text-shadow: none;
+    }
+
+    24% {
+        opacity: 0.7;
+        transform: translateX(2px);
+        text-shadow: none;
+    }
+
+    56% {
+        opacity: 0.8;
+        transform: translateY(1px);
+        text-shadow:
+            -1px 1px 0px rgba(255, 255, 0, 0.7),
+            /* Yellow */
+            1px -1px 0px rgba(0, 255, 0, 0.7);
+        /* Green */
+    }
+}
+
+
+.made-by-signature {
+    text-align: center;
+    padding: 15px 0;
+    font-family: 'Poppins', sans-serif;
+
+    font-size: 0.9em;
+    /* Kecilkan ukuran font */
+    color: var(--text-light);
+    letter-spacing: 2px;
+    opacity: 0.7;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.made-by-signature span {
+    display: inline-block;
+    animation: text-glow 3s ease-in-out infinite alternate, text-flicker 4s linear infinite;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.made-by-signature span:hover {
+    color: var(--accent-glow);
+    box-shadow: 0 0 20px rgba(63, 185, 80, 0.6);
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Penyesuaian spesifik untuk posisi */
+.made-by-signature.after-cars {
+    margin-top: 20px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.made-by-signature.in-garage {
+    margin-top: auto;
+    /* Dorong ke bawah */
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2);
+}
