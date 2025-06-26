@@ -27,17 +27,9 @@ Aplikasi ini tersedia dalam dua versi berbeda namun sama-sama *keren dan interak
 
 | Komponen | Teknologi               | Deskripsi                                                                 |
 |----------|-------------------------|---------------------------------------------------------------------------|
-| Backend  | Python 3                | Mengelola logika bisnis, transaksi, dan menjalankan versi CLI.           |
 | Frontend | HTML5, CSS3, JS (ES6+)  | Membangun struktur, gaya, dan animasi untuk pengalaman Web yang interaktif.|
 
 ---
 
 ## ⚙️ Instalasi & Cara Menjalankan
 
-### 💻 Versi CLI (Terminal)
-1. Pastikan **Python 3** telah terinstal.
-2. Unduh file: `vending_machine_v3.py`
-3. Buka terminal dan arahkan ke folder tempat file berada.
-4. Jalankan perintah berikut:
-   ```bash
-   python ven.py
