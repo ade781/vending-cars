@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vending Machine Mobil Mewah</title>
+
+    <!-- Menghubungkan ke file CSS eksternal -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Orbitron:wght@500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Kontainer untuk efek confetti -->
+    <div id="confetti-container"></div>
+
+    <div class="main-layout">
+        <!-- Struktur Vending Machine yang sudah ada -->
+        <div class="vending-machine">
+            <header>
+                <h1>Vending Machine Mobil</h1>
+                <p>Pilih Kendaraan Impian Anda</p>
+            </header>
+            <main class="car-display">
+                <div id="car-list" class="car-list">
+                    <!-- Daftar mobil akan dimasukkan di sini oleh JavaScript -->
+                </div>
+            </main>
+            <footer class="control-panel">
+                <div class="input-group">
+                    <label for="saldo-input">Masukkan Saldo Anda (Rp)</label>
+                    <input type="text" id="saldo-input" placeholder="Contoh: 1000000000">
+                </div>
+                <button id="buy-button" class="buy-button">
+                    <span>Beli Sekarang</span>
+                </button>
+            </footer>
+        </div>
+
+        <!-- Bagian Baru: Garasi Mobil yang Dibeli -->
+        <aside class="purchased-garage">
+            <h2>Garasi Anda</h2>
+            <div id="purchased-list-container" class="purchased-list-container">
+                <!-- Mobil yang dibeli akan muncul di sini -->
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modal untuk menampilkan hasil -->
+    <div id="message-modal" class="modal-overlay">
+        <div id="modal-content" class="modal-content">
+            <div id="modal-icon"></div>
+            <h2 id="modal-title"></h2>
+            <p id="modal-message"></p>
+            <button id="modal-close-button" class="modal-close-button">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Menghubungkan ke file JavaScript eksternal di akhir body -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>

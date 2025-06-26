@@ -1,0 +1,489 @@
+/* --- File CSS (style.css) --- */
+:root {
+    --primary-bg: #0d1117;
+    --secondary-bg: #161b22;
+    --card-bg: rgba(33, 40, 51, 0.6);
+    --border-color: #30363d;
+    --accent-glow: #238636;
+    --accent-buy: #58a6ff;
+    --text-color: #c9d1d9;
+    --text-light: #f0f6fc;
+    --success-color: #3fb950;
+    --error-color: #f85149;
+    --font-body: 'Roboto', sans-serif;
+    --font-title: 'Orbitron', sans-serif;
+}
+
+@keyframes background-pan {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes confetti-explosion {
+    0% {
+        transform: scale(1) translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0) translateY(400px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 25px rgba(35, 134, 54, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(35, 134, 54, 0.8);
+    }
+
+    100% {
+        box-shadow: 0 0 25px rgba(35, 134, 54, 0.4);
+    }
+}
+
+/* Animasi masuk untuk item di garasi */
+@keyframes slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    background-image: linear-gradient(135deg, var(--primary-bg) 0%, #010409 25%, #161b22 100%);
+    background-size: 200% 200%;
+    animation: background-pan 15s ease infinite;
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #f00;
+    opacity: 0;
+    animation: confetti-explosion 2s ease-out forwards;
+}
+
+/* Layout Utama */
+.main-layout {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1500px;
+    align-items: flex-start;
+}
+
+.vending-machine {
+    flex-grow: 1;
+    background: var(--secondary-bg);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+header {
+    padding: 25px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+header:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-family: var(--font-title);
+    color: var(--text-light);
+    font-weight: 700;
+    font-size: 2.2em;
+    letter-spacing: 2px;
+    transition: text-shadow 0.3s ease;
+}
+
+header h1:hover {
+    text-shadow: 0 0 15px var(--accent-buy);
+}
+
+header p {
+    color: var(--accent-buy);
+    font-size: 1.1em;
+}
+
+.car-display {
+    padding: 30px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.car-display::-webkit-scrollbar {
+    width: 10px;
+}
+
+.car-display::-webkit-scrollbar-track {
+    background: var(--secondary-bg);
+}
+
+.car-display::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.car-display::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-buy);
+}
+
+.car-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    perspective: 1000px;
+}
+
+.car-item {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.25s ease-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.car-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 75%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.6s ease;
+}
+
+.car-item:hover::before {
+    left: 120%;
+}
+
+.car-item:hover {
+    transform: translateY(-8px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-buy);
+}
+
+.car-item.selected {
+    border-color: var(--accent-glow);
+    transform: translateY(-5px) scale(1.05);
+    animation: pulse-glow 2s infinite;
+}
+
+.car-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.car-item:hover img {
+    transform: scale(1.1);
+}
+
+.car-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.car-info h3 {
+    font-family: var(--font-title);
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.car-info p {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--accent-buy);
+    margin-top: auto;
+}
+
+.control-panel {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.control-panel input {
+    font-family: var(--font-body);
+    background-color: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-light);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1em;
+    width: 280px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.control-panel input:hover {
+    border-color: var(--accent-buy);
+    box-shadow: 0 0 5px rgba(88, 166, 255, 0.2);
+}
+
+.control-panel input:focus {
+    border-color: var(--accent-buy);
+    box-shadow: 0 0 10px rgba(88, 166, 255, 0.5);
+}
+
+.buy-button {
+    font-family: var(--font-title);
+    background-image: linear-gradient(45deg, var(--accent-buy) 0%, #3a8dff 100%);
+    color: var(--text-light);
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1em;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+}
+
+.buy-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(88, 166, 255, 0.5);
+}
+
+.buy-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 10px rgba(88, 166, 255, 0.3);
+}
+
+/* Gaya untuk Garasi */
+.purchased-garage {
+    width: 320px;
+    flex-shrink: 0;
+    background: var(--secondary-bg);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    max-height: calc(60vh + 150px);
+    /* Samakan tinggi dengan vending machine */
+    display: flex;
+    flex-direction: column;
+}
+
+.purchased-garage h2 {
+    font-family: var(--font-title);
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--accent-buy);
+}
+
+.purchased-list-container {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.purchased-list-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.purchased-list-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.purchased-list-container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+
+.empty-garage-message {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-color);
+    opacity: 0.5;
+}
+
+.purchased-car-item {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    animation: slide-in 0.5s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.purchased-car-item img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.purchased-car-item h4 {
+    font-family: var(--font-body);
+    font-size: 1em;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--secondary-bg);
+    padding: 30px 40px;
+    border-radius: 15px;
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    border: 1px solid;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#modal-icon {
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+#modal-icon:hover {
+    transform: scale(1.1);
+}
+
+#modal-icon svg {
+    width: 80px;
+    height: 80px;
+}
+
+.modal-content h2 {
+    font-family: var(--font-title);
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.modal-content.success {
+    border-color: var(--success-color);
+}
+
+.modal-content.success h2 {
+    color: var(--success-color);
+}
+
+.modal-content.error {
+    border-color: var(--error-color);
+}
+
+.modal-content.error h2 {
+    color: var(--error-color);
+}
+
+.modal-close-button {
+    font-family: var(--font-title);
+    background-color: var(--border-color);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 30px;
+    font-size: 1em;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.modal-close-button:hover {
+    background-color: var(--accent-buy);
+}
