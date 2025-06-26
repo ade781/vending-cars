@@ -40,4 +40,4 @@ Aplikasi ini tersedia dalam dua versi berbeda namun sama-sama *keren dan interak
 3. Buka terminal dan arahkan ke folder tempat file berada.
 4. Jalankan perintah berikut:
    ```bash
-   python vending_machine_v3.py
+   python ven.py
