@@ -66,6 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (type === 'error') saldoStatus.classList.add('is-error');
     }
 
+    function getFallbackImage() {
+        return 'https://placehold.co/600x400/1b2a43/e5edf8?text=Image+Unavailable';
+    }
+
+    function createCarImage(src, alt) {
+        const image = document.createElement('img');
+        image.src = src;
+        image.alt = alt;
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        image.addEventListener('error', () => {
+            image.src = getFallbackImage();
+        }, { once: true });
+        return image;
+    }
+
     // Fungsi untuk menampilkan mobil di garasi
     function displayPurchasedCars() {
         purchasedListContainer.innerHTML = ''; // Kosongkan daftar
@@ -78,13 +94,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.classList.add('purchased-car-item');
             const formattedPrice = formatCurrency(car.harga);
-            item.innerHTML = `
-                <img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';">
-                <div>
-                    <h4>${car.nama}</h4>
-                    <p>Harga beli: ${formattedPrice}</p>
-                </div>
-            `;
+
+            const info = document.createElement('div');
+            const title = document.createElement('h4');
+            title.textContent = car.nama;
+            const price = document.createElement('p');
+            price.textContent = `Harga beli: ${formattedPrice}`;
+            info.append(title, price);
+
+            item.append(createCarImage(car.gambar, car.nama), info);
             purchasedListContainer.appendChild(item);
         });
     }
@@ -117,9 +135,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const carItem = document.createElement('div');
             carItem.classList.add('car-item');
             carItem.dataset.id = key;
+            carItem.setAttribute('role', 'button');
+            carItem.setAttribute('tabindex', '0');
+            carItem.setAttribute('aria-pressed', 'false');
             const formattedPrice = formatCurrency(car.harga);
-            carItem.innerHTML = `<img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';"><div class="car-info"><h3>${car.nama}</h3><p>${formattedPrice}</p></div>`;
+            const info = document.createElement('div');
+            info.className = 'car-info';
+            const title = document.createElement('h3');
+            title.textContent = car.nama;
+            const price = document.createElement('p');
+            price.textContent = formattedPrice;
+            info.append(title, price);
+            carItem.append(createCarImage(car.gambar, car.nama), info);
             carItem.addEventListener('click', handleCarSelection);
+            carItem.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleCarSelection({ currentTarget: carItem });
+                }
+            });
             carListContainer.appendChild(carItem);
         }
     }
@@ -129,11 +163,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedCarId === clickedCar.dataset.id) {
             selectedCarId = null;
             clickedCar.classList.remove('selected');
+            clickedCar.setAttribute('aria-pressed', 'false');
             buyButton.disabled = true;
         } else {
             selectedCarId = clickedCar.dataset.id;
-            document.querySelectorAll('.car-item').forEach(item => item.classList.remove('selected'));
+            document.querySelectorAll('.car-item').forEach(item => {
+                item.classList.remove('selected');
+                item.setAttribute('aria-pressed', 'false');
+            });
             clickedCar.classList.add('selected');
+            clickedCar.setAttribute('aria-pressed', 'true');
             buyButton.disabled = false;
             setSaldoStatus(`Mobil dipilih: ${CARS_AVAILABLE[selectedCarId].nama}`);
         }
@@ -194,7 +233,10 @@ document.addEventListener('DOMContentLoaded', () => {
             saldoInput.value = '';
             selectedCarId = null;
             buyButton.disabled = true;
-            document.querySelectorAll('.car-item').forEach(item => item.classList.remove('selected'));
+            document.querySelectorAll('.car-item').forEach(item => {
+                item.classList.remove('selected');
+                item.setAttribute('aria-pressed', 'false');
+            });
 
         } else {
             const kekurangan = selectedCar.harga - saldo;
