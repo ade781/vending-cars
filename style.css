@@ -85,6 +85,11 @@ input {
     display: grid;
     gap: var(--space-3);
     margin-bottom: var(--space-8);
+    padding: var(--space-6);
+    border: 1px solid rgba(104, 164, 255, 0.18);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(130deg, rgba(24, 40, 64, 0.65), rgba(18, 31, 51, 0.42));
+    box-shadow: var(--shadow-card);
 }
 
 .site-header .eyebrow {
@@ -115,6 +120,8 @@ input {
 .main-layout {
     display: grid;
     gap: var(--space-6);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
 }
 
 .vending-machine,
@@ -123,6 +130,12 @@ input {
     border: 1px solid rgba(74, 108, 155, 0.45);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-soft);
+}
+
+.vending-machine {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: min(760px, calc(100vh - 10rem));
 }
 
 .panel-header {
@@ -142,6 +155,7 @@ input {
 
 .car-display {
     padding: var(--space-6);
+    overflow: auto;
 }
 
 .car-list {
@@ -150,6 +164,8 @@ input {
 }
 
 .control-panel {
+    display: grid;
+    gap: var(--space-4);
     padding: var(--space-5) var(--space-6) var(--space-6);
     border-top: 1px solid rgba(74, 108, 155, 0.3);
 }
@@ -169,6 +185,19 @@ input {
 .saldo-status {
     color: var(--text-muted);
     font-size: 0.85rem;
+}
+
+.purchased-garage {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: min(760px, calc(100vh - 10rem));
+    padding: var(--space-6);
+}
+
+.purchased-garage h2 {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    margin-bottom: var(--space-4);
 }
 
 #confetti-container {
