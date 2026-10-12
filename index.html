@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vending Machine Mobil Mewah</title>
+    <meta name="description"
+        content="Dashboard showroom mobil interaktif untuk simulasi pembelian mobil dengan validasi saldo dan garasi pembelian.">
+    <meta name="theme-color" content="#0f172a">
+    <title>Vending Cars — Showroom Dashboard</title>
 
     <!-- Menghubungkan ke file CSS eksternal -->
     <link rel="stylesheet" href="style.css">
@@ -17,57 +20,71 @@
 </head>
 
 <body>
-
     <!-- Kontainer untuk efek confetti -->
-    <div id="confetti-container"></div>
+    <div id="confetti-container" aria-hidden="true"></div>
 
-    <div class="main-layout">
-        <!-- Struktur Vending Machine yang sudah ada -->
-        <div class="vending-machine">
-            <header>
-                <h1>Vending Machine Mobil</h1>
-                <p>Pilih Kendaraan Impian Anda</p>
-            </header>
-            <main class="car-display">
-                <div id="car-list" class="car-list">
-                    <!-- Daftar mobil akan dimasukkan di sini oleh JavaScript -->
+    <div class="page-shell">
+        <header class="site-header">
+            <p class="eyebrow">Vending Cars</p>
+            <h1>Dashboard Showroom Mobil</h1>
+            <p class="subheading">Pilih kendaraan, masukkan saldo, lalu selesaikan transaksi pembelian.</p>
+        </header>
+
+        <main class="main-layout">
+            <!-- Struktur Vending Machine yang sudah ada -->
+            <section class="vending-machine" aria-labelledby="showroom-heading">
+                <header class="panel-header">
+                    <h2 id="showroom-heading">Katalog Showroom</h2>
+                    <p>Pilih satu unit mobil untuk diproses.</p>
+                </header>
+                <section class="car-display" aria-label="Daftar mobil tersedia">
+                    <div id="car-list" class="car-list" role="list">
+                        <!-- Daftar mobil akan dimasukkan di sini oleh JavaScript -->
+                    </div>
+                    <!-- Tambahkan tulisan "MADE BY ADE7" di bawah card mobil -->
+                    <div class="made-by-signature after-cars">
+                        <span>MADE BY ADE7</span>
+                    </div>
+                </section>
+                <footer class="control-panel" aria-labelledby="transaction-heading">
+                    <h3 id="transaction-heading" class="visually-hidden">Panel transaksi</h3>
+                    <div class="input-group">
+                        <label for="saldo-input">Masukkan saldo Anda (Rp)</label>
+                        <p id="saldo-helper" class="field-helper">Gunakan angka saja. Contoh: 1000000000</p>
+                        <input type="text" id="saldo-input" placeholder="Contoh: 1000000000" inputmode="numeric"
+                            autocomplete="off" aria-describedby="saldo-helper saldo-status">
+                        <p id="saldo-status" class="saldo-status" role="status" aria-live="polite">
+                            Saldo belum diisi.
+                        </p>
+                    </div>
+                    <button id="buy-button" class="buy-button" type="button">
+                        <span>Beli Sekarang</span>
+                    </button>
+                </footer>
+            </section>
+
+            <!-- Bagian Baru: Garasi Mobil yang Dibeli -->
+            <aside class="purchased-garage" aria-labelledby="garage-heading">
+                <h2 id="garage-heading">Garasi Anda</h2>
+                <div id="purchased-list-container" class="purchased-list-container" aria-live="polite">
+                    <!-- Mobil yang dibeli akan muncul di sini -->
                 </div>
-                <!-- Tambahkan tulisan "MADE BY ADE7" di bawah card mobil -->
-                <div class="made-by-signature after-cars">
+                <!-- Tambahkan tulisan "MADE BY ADE7" di bagian bawah garasi -->
+                <div class="made-by-signature in-garage">
                     <span>MADE BY ADE7</span>
                 </div>
-            </main>
-            <footer class="control-panel">
-                <div class="input-group">
-                    <label for="saldo-input">Masukkan Saldo Anda (Rp)</label>
-                    <input type="text" id="saldo-input" placeholder="Contoh: 1000000000">
-                </div>
-                <button id="buy-button" class="buy-button">
-                    <span>Beli Sekarang</span>
-                </button>
-            </footer>
-        </div>
-
-        <!-- Bagian Baru: Garasi Mobil yang Dibeli -->
-        <aside class="purchased-garage">
-            <h2>Garasi Anda</h2>
-            <div id="purchased-list-container" class="purchased-list-container">
-                <!-- Mobil yang dibeli akan muncul di sini -->
-            </div>
-            <!-- Tambahkan tulisan "MADE BY ADE7" di bagian bawah garasi -->
-            <div class="made-by-signature in-garage">
-                <span>MADE BY ADE7</span>
-            </div>
-        </aside>
+            </aside>
+        </main>
     </div>
 
     <!-- Modal untuk menampilkan hasil -->
-    <div id="message-modal" class="modal-overlay">
-        <div id="modal-content" class="modal-content">
-            <div id="modal-icon"></div>
-            <h2 id="modal-title"></h2>
+    <div id="message-modal" class="modal-overlay" aria-hidden="true">
+        <div id="modal-content" class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title"
+            aria-describedby="modal-message">
+            <div id="modal-icon" aria-hidden="true"></div>
+            <h2 id="modal-title">Status Transaksi</h2>
             <p id="modal-message"></p>
-            <button id="modal-close-button" class="modal-close-button">Tutup</button>
+            <button id="modal-close-button" class="modal-close-button" type="button">Tutup</button>
         </div>
     </div>
 
