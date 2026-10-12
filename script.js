@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedCarId = null;
     let purchasedCars = []; // Array untuk menyimpan mobil yang dibeli
     const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+    let lastFocusedElement = null;
 
     function formatCurrency(value) {
         return currencyFormatter.format(value);
@@ -89,24 +90,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createConfettiExplosion() {
-        const confettiCount = 100;
+        const confettiCount = 70;
         const colors = ['#f85149', '#58a6ff', '#3fb950', '#f0f6fc', '#ffcb00'];
         for (let i = 0; i < confettiCount; i++) {
             const confetti = document.createElement('div');
             confetti.classList.add('confetti');
             confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            confetti.style.left = `50%`;
-            confetti.style.top = `50%`;
+            confetti.style.left = '50%';
+            confetti.style.top = '50%';
             const angle = Math.random() * 360;
-            const distance = Math.random() * (window.innerWidth / 2);
+            const distance = Math.random() * Math.min(window.innerWidth * 0.5, 520);
             const transformX = Math.cos(angle * (Math.PI / 180)) * distance;
             const transformY = Math.sin(angle * (Math.PI / 180)) * distance;
-            const existingKeyframes = `@keyframes confetti-explosion-${i} { 0% { transform: translate(0, 0) scale(1); opacity: 1; } 100% { transform: translate(${transformX}px, ${transformY}px) scale(0); opacity: 0; } }`;
-            const styleSheet = document.styleSheets[0];
-            styleSheet.insertRule(existingKeyframes, styleSheet.cssRules.length);
-            confetti.style.animation = `confetti-explosion-${i} 2s ease-out forwards`;
+            confetti.style.setProperty('--x', `${transformX}px`);
+            confetti.style.setProperty('--y', `${transformY}px`);
+            confetti.style.setProperty('--r', `${Math.random() * 360}deg`);
             confettiContainer.appendChild(confetti);
-            setTimeout(() => { confetti.remove(); }, 2000);
+            setTimeout(() => { confetti.remove(); }, 1200);
         }
     }
 
@@ -140,18 +140,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showMessage(title, message, type) {
+        lastFocusedElement = document.activeElement;
         modalIcon.innerHTML = icons[type] || '';
         modalTitle.textContent = title;
         modalMessage.innerHTML = message;
         modalContent.className = 'modal-content';
         modalContent.classList.add(type);
-        modalOverlay.style.display = 'flex';
-        setTimeout(() => modalOverlay.classList.add('show'), 10);
+        modalOverlay.classList.add('show');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+        modalCloseButton.focus();
     }
 
     function hideModal() {
         modalOverlay.classList.remove('show');
-        setTimeout(() => { modalOverlay.style.display = 'none'; }, 400);
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        if (lastFocusedElement instanceof HTMLElement) {
+            lastFocusedElement.focus();
+        }
     }
 
     function handleTransaction() {
@@ -231,6 +236,11 @@ document.addEventListener('DOMContentLoaded', () => {
     modalCloseButton.addEventListener('click', hideModal);
     modalOverlay.addEventListener('click', (event) => {
         if (event.target === modalOverlay) { hideModal(); }
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modalOverlay.classList.contains('show')) {
+            hideModal();
+        }
     });
 
     // Inisialisasi awal

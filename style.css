@@ -402,6 +402,113 @@ input {
     height: 10px;
     border-radius: 2px;
     opacity: 0;
+    transform: translate(-50%, -50%);
+    animation: confetti-burst 900ms ease-out forwards, confetti-fade 1200ms ease-out forwards;
+}
+
+@keyframes confetti-burst {
+    to {
+        transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) rotate(var(--r, 180deg));
+    }
+}
+
+@keyframes confetti-fade {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: var(--space-5);
+    background: var(--bg-overlay);
+    backdrop-filter: blur(4px);
+    z-index: 1200;
+}
+
+.modal-overlay.show {
+    display: grid;
+}
+
+.modal-content {
+    width: min(500px, 100%);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    border: 1px solid rgba(110, 146, 197, 0.52);
+    background: linear-gradient(175deg, rgba(26, 39, 60, 0.98), rgba(18, 30, 49, 0.98));
+    box-shadow: var(--shadow-soft);
+    text-align: left;
+}
+
+#modal-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: var(--space-4);
+}
+
+#modal-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content h2 {
+    font-family: var(--font-title);
+    font-size: 1.35rem;
+    margin-bottom: var(--space-2);
+}
+
+.modal-content p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-5);
+    line-height: 1.6;
+}
+
+.modal-content.success {
+    border-color: rgba(79, 197, 138, 0.8);
+}
+
+.modal-content.error {
+    border-color: rgba(255, 109, 125, 0.86);
+}
+
+.modal-close-button {
+    border: 1px solid rgba(116, 151, 202, 0.55);
+    color: var(--text-primary);
+    background: rgba(38, 58, 88, 0.8);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close-button:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+
+.made-by-signature {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(97, 133, 184, 0.32);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-align: center;
+}
+
+.made-by-signature span {
+    display: inline-block;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(98, 136, 192, 0.4);
+    background: rgba(16, 28, 45, 0.5);
 }
 
 .visually-hidden {
