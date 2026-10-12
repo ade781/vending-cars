@@ -161,6 +161,67 @@ input {
 .car-list {
     display: grid;
     gap: var(--space-5);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.car-item {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(87, 121, 166, 0.45);
+    background: linear-gradient(180deg, rgba(40, 60, 91, 0.7), rgba(28, 45, 71, 0.78));
+    display: grid;
+    grid-template-rows: 160px auto;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-card);
+}
+
+.car-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(120, 170, 237, 0.72);
+    box-shadow: 0 16px 28px rgba(3, 10, 22, 0.45);
+}
+
+.car-item.selected {
+    border-color: var(--brand);
+    background: linear-gradient(180deg, rgba(45, 72, 108, 0.8), rgba(31, 54, 86, 0.9));
+    box-shadow: 0 0 0 2px rgba(104, 164, 255, 0.2), 0 16px 32px rgba(4, 14, 30, 0.58);
+}
+
+.car-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.car-info {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-4);
+}
+
+.car-info h3 {
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.car-info p {
+    color: #acd0ff;
+    font-weight: 700;
+}
+
+.car-display::-webkit-scrollbar {
+    width: 10px;
+}
+
+.car-display::-webkit-scrollbar-thumb {
+    background: rgba(126, 162, 216, 0.55);
+    border-radius: 999px;
+}
+
+.car-display::-webkit-scrollbar-track {
+    background: rgba(14, 24, 39, 0.6);
+    border-radius: 999px;
 }
 
 .control-panel {
