@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalCloseButton = document.getElementById('modal-close-button');
     const confettiContainer = document.getElementById('confetti-container');
     const purchasedListContainer = document.getElementById('purchased-list-container');
+    const saldoStatus = document.getElementById('saldo-status');
 
     const icons = {
         success: `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-1.93 14.93L6 12.86l1.41-1.41 2.66 2.66 5.66-5.66L17.14 10l-7.07 7.07z" fill="#3fb950"></path></svg>`,
@@ -38,6 +39,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedCarId = null;
     let purchasedCars = []; // Array untuk menyimpan mobil yang dibeli
+    const currencyFormatter = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+
+    function formatCurrency(value) {
+        return currencyFormatter.format(value);
+    }
+
+    function sanitizeNumberInput(value) {
+        return value.replace(/[^0-9]/g, '');
+    }
+
+    function parseSaldo(value) {
+        const cleaned = sanitizeNumberInput(value);
+        if (!cleaned) {
+            return null;
+        }
+        const parsed = Number.parseInt(cleaned, 10);
+        return Number.isNaN(parsed) ? null : parsed;
+    }
+
+    function setSaldoStatus(message, type = 'default') {
+        saldoStatus.textContent = message;
+        saldoStatus.classList.remove('is-success', 'is-error');
+        if (type === 'success') saldoStatus.classList.add('is-success');
+        if (type === 'error') saldoStatus.classList.add('is-error');
+    }
 
     // Fungsi untuk menampilkan mobil di garasi
     function displayPurchasedCars() {
@@ -87,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const carItem = document.createElement('div');
             carItem.classList.add('car-item');
             carItem.dataset.id = key;
-            const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(car.harga);
+            const formattedPrice = formatCurrency(car.harga);
             carItem.innerHTML = `<img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';"><div class="car-info"><h3>${car.nama}</h3><p>${formattedPrice}</p></div>`;
             carItem.addEventListener('click', handleCarSelection);
             carListContainer.appendChild(carItem);
@@ -99,10 +125,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedCarId === clickedCar.dataset.id) {
             selectedCarId = null;
             clickedCar.classList.remove('selected');
+            buyButton.disabled = true;
         } else {
             selectedCarId = clickedCar.dataset.id;
             document.querySelectorAll('.car-item').forEach(item => item.classList.remove('selected'));
             clickedCar.classList.add('selected');
+            buyButton.disabled = false;
+            setSaldoStatus(`Mobil dipilih: ${CARS_AVAILABLE[selectedCarId].nama}`);
         }
     }
 
@@ -123,21 +152,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleTransaction() {
         if (!selectedCarId) {
+            setSaldoStatus('Pilih mobil terlebih dahulu sebelum transaksi.', 'error');
             showMessage('Error', 'Silakan pilih mobil terlebih dahulu.', 'error');
             return;
         }
 
-        const saldoStr = saldoInput.value.replace(/[^0-9]/g, '');
-        if (saldoStr === '') {
+        const saldo = parseSaldo(saldoInput.value);
+        if (saldo === null) {
+            saldoInput.setAttribute('aria-invalid', 'true');
+            setSaldoStatus('Saldo belum valid. Isi nominal angka yang benar.', 'error');
             showMessage('Error', 'Silakan masukkan jumlah saldo Anda.', 'error');
             return;
         }
-
-        const saldo = parseInt(saldoStr, 10);
-        if (isNaN(saldo)) {
-            showMessage('Error', 'Input saldo tidak valid. Harap masukkan angka.', 'error');
-            return;
-        }
+        saldoInput.setAttribute('aria-invalid', 'false');
 
         const selectedCar = CARS_AVAILABLE[selectedCarId];
 
@@ -150,30 +177,60 @@ document.addEventListener('DOMContentLoaded', () => {
             displayPurchasedCars();
 
             const kembalian = saldo - selectedCar.harga;
-            const formattedKembalian = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(kembalian);
+            const formattedKembalian = formatCurrency(kembalian);
             const successMessage = `Anda telah berhasil membeli <strong>${selectedCar.nama}</strong>.<br>Sisa saldo Anda: <strong>${formattedKembalian}</strong>`;
             showMessage('Transaksi Berhasil!', successMessage, 'success');
+            setSaldoStatus(`Transaksi berhasil. Sisa saldo: ${formattedKembalian}`, 'success');
 
             saldoInput.value = '';
             selectedCarId = null;
+            buyButton.disabled = true;
             document.querySelectorAll('.car-item').forEach(item => item.classList.remove('selected'));
 
         } else {
             const kekurangan = selectedCar.harga - saldo;
-            const formattedKekurangan = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(kekurangan);
+            const formattedKekurangan = formatCurrency(kekurangan);
             const errorMessage = `Maaf, saldo Anda tidak mencukupi.<br>Kekurangan dana: <strong>${formattedKekurangan}</strong>`;
             showMessage('Transaksi Gagal', errorMessage, 'error');
+            setSaldoStatus(`Saldo tidak mencukupi. Kekurangan: ${formattedKekurangan}`, 'error');
         }
     }
 
     // Event Listeners
     buyButton.addEventListener('click', handleTransaction);
+    saldoInput.addEventListener('input', () => {
+        const cleaned = sanitizeNumberInput(saldoInput.value);
+        if (!cleaned) {
+            saldoInput.value = '';
+            saldoInput.setAttribute('aria-invalid', 'false');
+            setSaldoStatus('Saldo belum diisi.');
+            return;
+        }
+
+        const numericValue = Number.parseInt(cleaned, 10);
+        if (Number.isNaN(numericValue)) {
+            saldoInput.setAttribute('aria-invalid', 'true');
+            setSaldoStatus('Input saldo tidak valid.', 'error');
+            return;
+        }
+
+        saldoInput.value = new Intl.NumberFormat('id-ID').format(numericValue);
+        saldoInput.setAttribute('aria-invalid', 'false');
+        setSaldoStatus(`Saldo terdeteksi: ${formatCurrency(numericValue)}`, 'success');
+    });
+    saldoInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleTransaction();
+        }
+    });
     modalCloseButton.addEventListener('click', hideModal);
     modalOverlay.addEventListener('click', (event) => {
         if (event.target === modalOverlay) { hideModal(); }
     });
 
     // Inisialisasi awal
+    buyButton.disabled = true;
     displayCars();
     displayPurchasedCars(); // Tampilkan garasi (awalnya kosong)
 });
