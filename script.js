@@ -69,16 +69,20 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayPurchasedCars() {
         purchasedListContainer.innerHTML = ''; // Kosongkan daftar
         if (purchasedCars.length === 0) {
-            purchasedListContainer.innerHTML = `<p class="empty-garage-message">Garasi masih kosong.</p>`;
+            purchasedListContainer.innerHTML = `<p class="empty-garage-message">Garasi masih kosong. Mobil yang berhasil dibeli akan tampil di sini.</p>`;
             return;
         }
 
         purchasedCars.forEach(car => {
             const item = document.createElement('div');
             item.classList.add('purchased-car-item');
+            const formattedPrice = formatCurrency(car.harga);
             item.innerHTML = `
                 <img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';">
-                <h4>${car.nama}</h4>
+                <div>
+                    <h4>${car.nama}</h4>
+                    <p>Harga beli: ${formattedPrice}</p>
+                </div>
             `;
             purchasedListContainer.appendChild(item);
         });

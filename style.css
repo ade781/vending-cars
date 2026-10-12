@@ -333,6 +333,61 @@ input {
     margin-bottom: var(--space-4);
 }
 
+.purchased-list-container {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    overflow: auto;
+    padding-right: var(--space-1);
+}
+
+.empty-garage-message {
+    margin: 0;
+    border: 1px dashed rgba(120, 156, 206, 0.35);
+    border-radius: var(--radius-md);
+    background: rgba(14, 25, 42, 0.4);
+    color: var(--text-secondary);
+    padding: var(--space-6);
+    text-align: center;
+}
+
+.purchased-car-item {
+    display: grid;
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    border: 1px solid rgba(100, 137, 189, 0.42);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    background: linear-gradient(155deg, rgba(32, 52, 82, 0.72), rgba(23, 39, 63, 0.8));
+}
+
+.purchased-car-item img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+}
+
+.purchased-car-item h4 {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-1);
+}
+
+.purchased-car-item p {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+}
+
+.purchased-list-container::-webkit-scrollbar {
+    width: 9px;
+}
+
+.purchased-list-container::-webkit-scrollbar-thumb {
+    background: rgba(112, 151, 208, 0.48);
+    border-radius: 999px;
+}
+
 #confetti-container {
     position: fixed;
     inset: 0;
