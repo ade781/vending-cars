@@ -14,6 +14,8 @@ Aplikasi web statis untuk simulasi pembelian mobil dari mesin vending virtual de
 - Efek confetti saat transaksi berhasil.
 - Garasi pembelian yang menampilkan riwayat mobil yang berhasil dibeli.
 - Fallback gambar ketika sumber gambar eksternal gagal dimuat.
+- Navigasi keyboard dasar (pilih mobil via Enter/Space, tutup modal via Esc).
+- Dukungan preferensi `prefers-reduced-motion`.
 
 ## Cara Menjalankan
 
