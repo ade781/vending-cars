@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.classList.add('purchased-car-item');
             item.innerHTML = `
-                <img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';">
+                <img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f3f4f6/111827?text=Image+Error';">
                 <h4>${car.nama}</h4>
             `;
             purchasedListContainer.appendChild(item);
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             carItem.classList.add('car-item');
             carItem.dataset.id = key;
             const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(car.harga);
-            carItem.innerHTML = `<img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/161b22/f0f6fc?text=Image+Error';"><div class="car-info"><h3>${car.nama}</h3><p>${formattedPrice}</p></div>`;
+            carItem.innerHTML = `<img src="${car.gambar}" alt="${car.nama}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/f3f4f6/111827?text=Image+Error';"><div class="car-info"><h3>${car.nama}</h3><p>${formattedPrice}</p></div>`;
             carItem.addEventListener('click', handleCarSelection);
             carListContainer.appendChild(carItem);
         }
